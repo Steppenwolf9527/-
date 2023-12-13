@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://122.9.47.93:3306/2021213067
+    username: 2021213067
+    password: 2021213067
+    type: com.alibaba.druid.pool.DruidDataSource
+    #Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    #druid 数据源专有配置
+    # Druid 数据库连接池配置
+    druid:
+
+      initial-size: 7 # 初始化连接数
+      minIdle: 5 # 最小空闲连接数
+      maxActive: 22 # 最大活跃连接数
+      maxWait: 60000 # 获取连接的最大等待时间（毫秒）
+      timeBetweenEvictionRunsMillis: 60000 # 连接回收的时间间隔（毫秒）
+      minEvictableIdleTimeMillis: 300000 # 连接在池中保持空闲的最小时间（毫秒）
+      validationQuery: SELECT 1 FROM DUAL # 验证连接是否有效的 SQL 语句
+      testWhileIdle: true # 当连接空闲时，是否进行有效性检测
+      testOnBorrow: false # 当从连接池借用连接时，是否进行有效性检测
+      testOnReturn: false # 当归还连接时，是否进行有效性检测
+      poolPreparedStatements: true # 是否使用预处理语句
+
+      # 配置监控统计拦截的 filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+      # 如果允许时报错 java.lang.ClassNotFoundException: org.apache.log4j.Priority
+      # 则导入 log4j 依赖即可，Maven 地址：https://mvnrepository.com/artifact/log4j/log4j
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20 # 每个连接最多可以创建的预处理语句数量
+      useGlobalDataSourceStat: true # 是否使用全局数据源统计信息
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500 # 连接属性配置
+
+  sql:
+    init:
+      mode: always
+logging:
+  level:
+    com:
+      example: debug
+    sql: debug
+  pattern:
+    console: '%-5level %C.%M[%line] - %msg%n'
+
+server:
+  port: 8080
+
